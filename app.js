@@ -19,7 +19,7 @@ app.engine('html', swig.renderFile);
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(__dirname + npm'/public/favicon.ico'));
-app.use('bower_components', express.static(__dirname + '/bower_components'));
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
