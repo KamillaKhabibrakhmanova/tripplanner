@@ -21,20 +21,35 @@ $(document).on('ready', function() {
 		count ++;
 	});
 
-	});
+	
 
 
    	$(".dropdown-menu").on('click', 'li', function(){
 		$(this).parent().prev().text($(this).text());
+		console.log(this.id)
   	});
 
 	
 	////Google Maps
-	function initialize_gmaps() {
-	 
+
+	var markers=[];
+
+
+	function newMarker (lat,lon,title){
+		var position = new google.maps.LatLng(lat,lon);
+		var marker = new google.maps.Marker({
+			position:position,
+			title:title
+		});
+		markers.push(newMarker);
+	};
+
+	function initialize_gmaps(inputMarkerLat,inputMarkerLon) {
+	 var markerLat = inputMarkerLat || 40.705786
+	 var markerLon = inputMarkerLon || -74.007672
 	  // initialize new google maps LatLng object
 	  var myLatlng = new google.maps.LatLng(40.705786,-74.007672); //need to query for this each time
-	 
+	 	console.log('LATLNG ',myLatlng)
 	  // set the map options hash
 	  var mapOptions = {
 	    center: myLatlng,
@@ -53,11 +68,24 @@ $(document).on('ready', function() {
 	    position: myLatlng,
 	    title:"Hello World!"
 	  });
+
+	  var marker2 = new google.maps.Marker({
+	  	position: new google.maps.LatLng(-.2,25),
+	  	title:'Africa'
+	  })
 	 
 	  // Add the marker to the map by calling setMap()
-	  marker.setMap(map);
+	  // marker.setMap(map);
+	  // marker2.setMap(map)
+	  markers.forEach(function(element){
+	  	element.setMap(map)
+	  })
+
 	}
 	 
-	$(document).ready(function() {
+	
 	  initialize_gmaps();
-}); 
+
+
+
+});

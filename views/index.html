@@ -26,7 +26,7 @@
             </ul>
 
         </div>
-        <button type="button" class="btn btn-primary">Add</button>
+        <button type="button" class="btn btn-primary" id="add-hotel">Add</button>
 
 
         <div class="btn-group">
@@ -37,7 +37,7 @@
                 <li class="divider"></li>
             </ul>
         </div>
-        <button type="button" class="btn btn-primary">Add</button>
+        <button type="button" class="btn btn-primary" id = "add-thing">Add</button>
 
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" >
@@ -48,7 +48,7 @@
                 
             </ul>
         </div>
-        <button type="button" class="btn btn-primary">Add</button>
+        <button type="button" class="btn btn-primary" id = "add-restaurant">Add</button>
     </div>
 </div>
 <div class='row' id='mapRow'>
@@ -72,6 +72,7 @@
 <script>
     {% autoescape false %}
     var all_hotels = {{hotels | json}};
+    console.log(all_hotels[0].place[0].location);
     var all_restaurants = {{restaurants | json}};
     var all_things_to_do = {{things_to_do | json}}; 
     {% endautoescape %}
