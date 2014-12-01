@@ -1,18 +1,93 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} {% block content %}
+<div class='row left-margin'>
+    <div class='main col-sm-4' id="button-row">
+        <button type="button" class="btn btn-default">Day 1</button>
+        <button type="button" class="btn btn-default">Day 2</button>
+        <button type="button" class="btn btn-default">Day 3</button>
+        <button type="button" class="btn btn-default" id="add_day">+ Add Day</button>
+    </div>
+    <div class='col-sm-8 '>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Hotels <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Action</a>
+                </li>
+                <li><a href="#">Another action</a>
+                </li>
+                <li><a href="#">Something else here</a>
+                </li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a>
+                </li>
+            </ul>
+        </div>
+        <button type="button" class="btn btn-primary">Add</button>
 
-{% block content %}
-    <h1>{{title}}</h1>
-    <p>Welcome to {{title}}</p>
 
-	<script>
- 	
-		{% autoescape false %}
-		var all_hotels = {{ hotels | json }};
-		var all_restaurants = {{ restaurants | json }};
-		var all_things_to_do = {{ things_to_do | json }};
-		{% endautoescape %}
-	 
-	</script>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Things to do <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Action</a>
+                </li>
+                <li><a href="#">Another action</a>
+                </li>
+                <li><a href="#">Something else here</a>
+                </li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a>
+                </li>
+            </ul>
+        </div>
+        <button type="button" class="btn btn-primary">Add</button>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Restarants <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Action</a>
+                </li>
+                <li><a href="#">Another action</a>
+                </li>
+                <li><a href="#">Something else here</a>
+                </li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a>
+                </li>
+            </ul>
+        </div>
+        <button type="button" class="btn btn-primary">Add</button>
+    </div>
+</div>
+
+
+</div>
+</div>
+
+<script>
+{ % autoescape false %
+}
+var all_hotels = {
+    {
+        hotels | json
+    }
+};
+var all_restaurants = {
+    {
+        restaurants | json
+    }
+};
+var all_things_to_do = {
+    {
+        things_to_do | json
+    }
+}; { % endautoescape %
+}
+</script>
 
 
 
