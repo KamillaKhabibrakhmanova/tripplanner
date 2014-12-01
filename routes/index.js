@@ -32,7 +32,7 @@ router.get('/', function(req, res) {
 	var thingsPromise = models.ThingsToDo.find().exec();
 
 	q.all([hotelPromise,resPromise,thingsPromise]).then(function(results){
-		console.log(results[0])
+		console.log(results[0]);
 		res.render('index', { 
 				title: "Trip Planner",
 				hotels: results[0],
@@ -43,6 +43,10 @@ router.get('/', function(req, res) {
 	})
 
 })
+
+
+
+
 module.exports = router;
 
 
