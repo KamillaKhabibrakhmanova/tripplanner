@@ -95,7 +95,7 @@ $(document).on('ready', function() {
         //console.log('Element log',element.data()[0])	//Gives lat, [1] gives long
         createNewMarker(element.data()[0],element.data()[1],element.text())
 
-        $('#things-list').append('<p>' + element + '</p>');
+        $('#things-list').append('<p>' + element.text() + '</p>');
     });
 
 
