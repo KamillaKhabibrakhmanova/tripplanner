@@ -5,48 +5,75 @@ $(document).on('ready', function() {
 
     ///Populating dropdowns, adding database ID to URL
     all_hotels.forEach(function(element) {
-        hotels.append('<li id=\"' + element._id + '\">' + element.name + '</a></li>')
+
+    	var newElement = $('<li id=\"' + element._id + '\">' + element.name + '</a></li>');
+    	newElement.data(element.place[0].location);
+        hotels.append(newElement)
+
     })
     var things = $('#things');
     all_things_to_do.forEach(function(element) {
-        things.append('<li id=\"' + element._id + '\">' + element.name + '</a></li>')
+    	var newElement = $('<li id=\"' + element._id + '\">' + element.name + '</a></li>');
+    	newElement.data(element.place[0].location);
+        things.append(newElement)
+
     })
 
     var restaurants = $('#restaurants');
     all_restaurants.forEach(function(element) {
-        restaurants.append('<li id=\"' + element._id + '\">' + element.name + '</a></li>')
+
+    	var newElement = $('<li id=\"' + element._id + '\">' + element.name + '</a></li>');
+    	newElement.data(element.place[0].location);        
+    	restaurants.append(newElement)
+
+
     })
+
+
     $('#add_day').on('click', function() {
         $('#button-row :nth-child(' + (count - 1) + ')').after(button + "Day " + count + "</button>");
         count++;
     });
 
 
-
-
     $(".dropdown-toggle-hotels").on('click', 'li', function() {
-        $(this).parent().prev().text($(this).text());
-        var element = $(this);
-
+        var selected= $(this).parent().prev();
+        selected.text($(this).text());
+        selected.data($(this).data())
+        var self = $(this);
+        console.log('SELECTED ',self.data())
+        
+        
     });
 
     $("#add-hotel").on('click', function() {
-        console.log($(this).prev().first())
-        var element = $(this).prev().children().first().text();
-        $('#hotel-list').append('<p>' + element + '</p>');
+        var element = $(this).prev().children().first();
+        
+        var element = $(this).prev().children().first();
+        //console.log('Element log',element.data()[0])	//Gives lat, [1] gives long
+        createNewMarker(element.data()[0],element.data()[1],element.text())
+
+        $('#hotel-list').append('<p>' + element.text() + '</p>');
     });
 
+
+
     $(".dropdown-toggle-restaurants").on('click', 'li', function() {
-        $(this).parent().prev().text($(this).text());
-        var element = null;
-        var element = $(this);
+       var selected= $(this).parent().prev();
+        selected.text($(this).text());
+        selected.data($(this).data())
+        var self = $(this);
+        console.log('SELECTED ',self.data())
 
 
     });
 
     $("#add-restaurant").on('click', function() {
-        console.log($(this).prev().first())
         var element = $(this).prev().children().first();
+        //console.log('Element log',element.data()[0])	//Gives lat, [1] gives long
+        createNewMarker(element.data()[0],element.data()[1],element.text())
+
+
         $('#restaurants-list').append('<p>' + element.text() + '</p>');
 
         
@@ -54,13 +81,20 @@ $(document).on('ready', function() {
 
 
     $(".dropdown-toggle-things").on('click', 'li', function() {
-        $(this).parent().prev().text($(this).text());
-        var element = $(this);
+        var selected= $(this).parent().prev();
+        selected.text($(this).text());
+        selected.data($(this).data())
+        var self = $(this);
+        console.log('SELECTED ',self.data())
     });
 
     $("#add-thing").on('click', function() {
         console.log($(this).prev().first())
         var element = $(this).prev().children().first().text();
+        var element = $(this).prev().children().first();
+        //console.log('Element log',element.data()[0])	//Gives lat, [1] gives long
+        createNewMarker(element.data()[0],element.data()[1],element.text())
+
         $('#things-list').append('<p>' + element + '</p>');
     });
 
@@ -72,13 +106,14 @@ $(document).on('ready', function() {
     var markers = [];
 
 
-    function newMarker(lat, lon, title) {
+    function createNewMarker(lat, lon, title) {
         var position = new google.maps.LatLng(lat, lon);
-        var marker = new google.maps.Marker({
+        var newMarker = new google.maps.Marker({
             position: position,
             title: title
         });
         markers.push(newMarker);
+        initialize_gmaps();
     };
 
     function initialize_gmaps(inputMarkerLat, inputMarkerLon) {
@@ -86,11 +121,11 @@ $(document).on('ready', function() {
         var markerLon = inputMarkerLon || -74.007672
             // initialize new google maps LatLng object
         var myLatlng = new google.maps.LatLng(40.705786, -74.007672); //need to query for this each time
-        console.log('LATLNG ', myLatlng)
+        // console.log('LATLNG ', myLatlng)
             // set the map options hash
         var mapOptions = {
             center: myLatlng,
-            zoom: 8,
+            zoom: 12,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
         };
 
