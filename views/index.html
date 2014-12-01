@@ -18,10 +18,10 @@
     </div>
     <div class='col-sm-8 '>
         <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-hotels" data-toggle="dropdown" aria-expanded="false" >
+            <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="false" >
                 Hotels <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu" id='hotels'>
+            <ul class="dropdown-menu dropdown-toggle-hotels" role="menu" id='hotels'>
                 <li class="divider"></li>
             </ul>
 
@@ -30,20 +30,20 @@
 
 
         <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" >
+            <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="false" >
                 Things to do <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu" id='things'>
+            <ul class="dropdown-menu dropdown-toggle-things" role="menu" id='things'>
                 <li class="divider"></li>
             </ul>
         </div>
         <button type="button" class="btn btn-primary" id = "add-thing">Add</button>
 
         <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false" >
+            <button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-expanded="false" >
                 Restaurants <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu" id='restaurants'>
+            <ul class="dropdown-menu dropdown-toggle-restaurants" role="menu" id='restaurants'>
                 <li class="divider"></li>
                 
             </ul>
@@ -54,6 +54,9 @@
 <div class='row' id='mapRow'>
     <div class= 'col-md-4' id='plans'>
         <ul id='plans'><h3>Plan for Day</h3></ul>
+        <li id = "hotel-list"><h4>Hotel</h4></li>
+        <li id = "things-list"><h4>Things to Do</h4></li>
+        <li id = "restaurants-list"><h4>Restaurants</h4></li>
 
     </div>
     
