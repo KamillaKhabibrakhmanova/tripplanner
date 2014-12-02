@@ -3,7 +3,8 @@ $(document).on('ready', function() {
     var count = 4;
     var hotels = $('#hotels');
 
-    ///Populating dropdowns, adding database ID to URL
+///Populating dropdowns, adding database ID to URL
+
     all_hotels.forEach(function(element) {
 
     	var newElement = $('<li id=\"' + element._id + '\">' + element.name + '</a></li>');
@@ -28,6 +29,19 @@ $(document).on('ready', function() {
 
 
     })
+// Switching between different days
+
+    $('.day').on('click', function(event) {
+        var id = $(event.target).attr('id');
+        id_num = id[6];
+        $('.plans').css('visibility', 'hidden').css('display', 'none')
+            .removeClass('active');
+        $('#plans-' + id_num).addClass("col-md-4 active")
+            .css("visibility", "visible").css('display', 'inline');
+
+    })
+
+
 
 
     $('#add_day').on('click', function() {
@@ -41,7 +55,6 @@ $(document).on('ready', function() {
         selected.text($(this).text());
         selected.data($(this).data())
         var self = $(this);
-        console.log('SELECTED ',self.data())
         
         
     });
@@ -51,9 +64,10 @@ $(document).on('ready', function() {
         
         var element = $(this).prev().children().first();
         //console.log('Element log',element.data()[0])	//Gives lat, [1] gives long
-        createNewMarker(element.data()[0],element.data()[1],element.text())
 
-        $('#hotel-list').append('<p>' + element.text() + '</p>');
+        createNewMarker(element.data()[0],element.data()[1],element.text());
+
+        $('.active #hotel-list').append('<p>' + element.text() + '</p>');
     });
 
 
@@ -74,7 +88,7 @@ $(document).on('ready', function() {
         createNewMarker(element.data()[0],element.data()[1],element.text())
 
 
-        $('#restaurants-list').append('<p>' + element.text() + '</p>');
+        $('.active #restaurants-list').append('<p>' + element.text() + '</p>');
 
         
     });
@@ -95,7 +109,7 @@ $(document).on('ready', function() {
         //console.log('Element log',element.data()[0])	//Gives lat, [1] gives long
         createNewMarker(element.data()[0],element.data()[1],element.text())
 
-        $('#things-list').append('<p>' + element.text() + '</p>');
+        $('.active #things-list').append('<p>' + element.text() + '</p>');
     });
 
 
@@ -149,9 +163,12 @@ $(document).on('ready', function() {
         // Add the marker to the map by calling setMap()
         // marker.setMap(map);
         // marker2.setMap(map)
-        markers.forEach(function(element) {
-            element.setMap(map)
-        })
+        for (var i = 0; i < markers.length; i++) {
+            markers.setMap(map);
+        }
+        // markers.forEach(function(element) {
+        //     element.setMap(map)
+        // })
 
     }
 

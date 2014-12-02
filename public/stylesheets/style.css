@@ -16,3 +16,7 @@
 #map-canvas {
   height: 100%;
   width: 100%; }
+
+.plans {
+  visibility: hidden;
+  display: none; }
