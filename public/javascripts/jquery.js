@@ -1,6 +1,6 @@
 $(document).on('ready', function() {
-    var button = "<button type=\"button\" class=\"btn btn-default\">";
-    var count = 4;
+    var count = 2;
+    var buttonMaker = function(count) { return "<button type=\"button\" class=\"btn btn-default day\" id=\"click-"+count+"\" >Day " + count + "</button>" };
     var hotels = $('#hotels');
 
 ///Populating dropdowns, adding database ID to URL
@@ -43,10 +43,57 @@ $(document).on('ready', function() {
 
 
 
+//Adding this clickhandler to all buttons
+function dayClickHandler() {
+    $('.day').on('click',function(){
+        var $this = $(this);
+        var dayNumber = $this.attr('id').split('-')[1];
+        $.get('/days/'+dayNumber,function(data){
+            //Object {_id: "547e400812852eb8f15954df", day_number: 1, __v: 3, thingsToDo: Array[1], restaurants: Array[1]…}
+            // console.log('DATA ',typeof data)
+            
+            var parsedData = data
+            // var parsedData=data
+            
+
+            var hotelList = $('#hotel-list');
+            var hotelName = parsedData.hotels[0].name;
+            hotelList.append(hotelName)
+            // console.log(parsedData)
+
+            var thingsList = $('#things-list');
+            thingsList.empty()
+            $(parsedData.thingsToDo).each(function(index,thing){
+                thingsList.append(thing.name)
+            })
+
+            var restaurantsList = $('#restaurants-list-list');
+            $(parsedData.restaurants).each(function(index,restaurant){
+                thingsList.append(restaurant.name)
+            });
+            
+        })
+    })
+};
+
+dayClickHandler();
 
     $('#add_day').on('click', function() {
-        $('#button-row :nth-child(' + (count - 1) + ')').after(button + "Day " + count + "</button>");
+        
+        var newButton = $('#day-button-row').append(buttonMaker(count))
+        console.log(newButton)
+        dayClickHandler();
+        // newButton.on('click',function(){
+        //     var $this = $(this);
+        //     var dayNumber = $this.attr('id').split('-')[1];
+        //     $.get('/'+dayNumber)
+        // })
         count++;
+        $.post('/days',{dayNumber:count-1}).done(function(){
+            
+
+        })
+            
     });
 
 
@@ -59,6 +106,21 @@ $(document).on('ready', function() {
         
     });
 
+
+
+    ///ADDING TO DB FOR ALL ATTRACTIONS
+    $('[id*="add-"]').on('click',function(event){
+        var element = $(this).prev().children().first();
+        var attractionType = $(event.target).attr('id').split('-')[1];
+        
+        $.post('/days/'+(count-1)+'/attractions',{type:attractionType,
+                                                    name:element.text()})
+    })
+
+
+
+
+
     $("#add-hotel").on('click', function() {
         var element = $(this).prev().children().first();
         
@@ -68,7 +130,9 @@ $(document).on('ready', function() {
         createNewMarker(element.data()[0],element.data()[1],element.text());
 
         $('.active #hotel-list').append('<p>' + element.text() + '</p>');
-    });
+        // $.post('/days/'+(count-1)+'/attractions',{hotel:element.text()})
+        });
+    
 
 
 
@@ -89,7 +153,8 @@ $(document).on('ready', function() {
 
 
         $('.active #restaurants-list').append('<p>' + element.text() + '</p>');
-
+        // $.post('/days/'+(count-1)+'/attractions',{restaurant:element.text()})
+            
         
     });
 
@@ -104,12 +169,13 @@ $(document).on('ready', function() {
 
     $("#add-thing").on('click', function() {
         console.log($(this).prev().first())
-        var element = $(this).prev().children().first().text();
+        // var element = $(this).prev().children().first().text();
         var element = $(this).prev().children().first();
         //console.log('Element log',element.data()[0])	//Gives lat, [1] gives long
         createNewMarker(element.data()[0],element.data()[1],element.text())
-
         $('.active #things-list').append('<p>' + element.text() + '</p>');
+        // $.post('/days/'+(count-1)+'/attractions',{thing:element.text()})
+        
     });
 
 
@@ -162,10 +228,10 @@ $(document).on('ready', function() {
 
         // Add the marker to the map by calling setMap()
         // marker.setMap(map);
-        // marker2.setMap(map)
-        for (var i = 0; i < markers.length; i++) {
-            markers.setMap(map);
-        }
+        // // marker2.setMap(map)
+        // for (var i = 0; i < markers.length; i++) {
+        //     markers.setMap(map);
+        // }
         // markers.forEach(function(element) {
         //     element.setMap(map)
         // })
@@ -174,7 +240,4 @@ $(document).on('ready', function() {
 
 
     initialize_gmaps();
-
-
-
 });

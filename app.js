@@ -9,7 +9,7 @@ var sass = require('node-sass');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var days = require('./routes/days');
 var app = express();
 
 // view engine setup
@@ -36,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/days',days);
 app.use('/javascript', express.static(__dirname + '/public/javascript'))
 
 

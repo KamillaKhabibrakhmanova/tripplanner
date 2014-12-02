@@ -25,14 +25,19 @@ router.get('/', function(req, res) {
 		//   		})
 	 //  	})
   // });
-
+	models.Hotel.find({},function(err,things){
+		console.log(things)
+	})
 
 	var hotelPromise = models.Hotel.find().exec();  //.exec method returns a promise
 	var resPromise = models.Restaurant.find().exec();
 	var thingsPromise = models.ThingsToDo.find().exec();
 
 	q.all([hotelPromise,resPromise,thingsPromise]).then(function(results){
-		console.log(results[0]);
+		
+		// console.log('RESTAURANTS ',resPromise)
+		// console.log('THINGS ',thingsPromise)
+		// console.log(results);
 		res.render('index', { 
 				title: "Trip Planner",
 				hotels: results[0],
